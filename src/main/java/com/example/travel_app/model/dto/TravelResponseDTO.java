@@ -6,15 +6,13 @@ import java.util.Map;
 public class TravelResponseDTO {
 
     private String startingCountryName;
-    private BigDecimal budgetPerCountry;
-    private BigDecimal totalBudget;
-    private BigDecimal leftoverBudget;
-
-    private Map<String, BigDecimal> budgetInRespectiveCurrency;
     String baseCurrency;
-
+    private BigDecimal totalBudget;
+    private BigDecimal budgetPerCountry;
+    private Map<String, BigDecimal> budgetInRespectiveCurrency;
     private int tripsCount;
-
+    private BigDecimal neededBudget;
+    private BigDecimal leftoverBudget;
     public TravelResponseDTO() {
     }
 
@@ -78,6 +76,15 @@ public class TravelResponseDTO {
 
     public TravelResponseDTO setTripsCount(int tripsCount) {
         this.tripsCount = tripsCount;
+        return this;
+    }
+
+    public BigDecimal getNeededBudget() {
+        return neededBudget;
+    }
+
+    public TravelResponseDTO setNeededBudget(BigDecimal neededBudget) {
+        this.neededBudget = neededBudget;
         return this;
     }
 }

@@ -63,4 +63,13 @@ public class CurrencyExchangeRate {
         this.exchangeRate = exchangeRate;
         return this;
     }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public CurrencyExchangeRate setCountry(Country country) {
+        this.country = country;
+        return this;
+    }
 }

@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.InvalidAttributeValueException;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -27,25 +25,27 @@ public class TravelController {
         this.travelPlanService = travelPlanService;
     }
 
+    //return all the neighbors of the country
     @GetMapping("/countries")
     public ResponseEntity<List<CountryDTO>> getAllCountries(){
 
         return ResponseEntity.ok(countryService.findAllCountries());
     }
 
-
+    //return the travelPlan result
     @GetMapping("/calculate")
     public ResponseEntity<TravelResponseDTO> calculateTravelPlan(
-            @RequestParam("startingCountryName") String startingCountryCode,
+            @RequestParam("startingCountryName") String startingCountryName,
             @RequestParam("budgetPerCountry") BigDecimal budgetPerCountry,
             @RequestParam("totalBudget") BigDecimal totalBudget,
             @RequestParam("baseCurrency") String baseCurrency
     ) throws InvalidAttributeValueException {
         TravelResponseDTO travelResponseDTO = travelPlanService.calculateTravelPlan(
-                startingCountryCode, budgetPerCountry, totalBudget, baseCurrency);
+                startingCountryName, budgetPerCountry, totalBudget, baseCurrency);
         return ResponseEntity.ok(travelResponseDTO);
     }
 
+    //Test:
     //http://localhost:8080/api/travel/calculate?startingCountryName=Bulgaria&budgetPerCountry=100&totalBudget=1200&baseCurrency=EUR
 
 

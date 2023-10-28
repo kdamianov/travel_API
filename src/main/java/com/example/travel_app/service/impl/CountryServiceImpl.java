@@ -22,7 +22,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
 
-
+    //find all the countries with their neighbors
     @Override
     public List<CountryDTO> findAllCountries() {
 
@@ -32,8 +32,8 @@ public class CountryServiceImpl implements CountryService {
                 .toList();
     }
 
+    //map the result to a DTO class
     private static CountryDTO mapToCountryDTO(Country country) {
-
         Set<String> neighbors = country.getNeighbors()
                 .stream()
                 .map(Country::getName)

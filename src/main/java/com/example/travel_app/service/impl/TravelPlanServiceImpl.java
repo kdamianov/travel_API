@@ -39,30 +39,39 @@ public class TravelPlanServiceImpl implements TravelPlanService {
         Set<Country> countryNeighbors = startCountry.getNeighbors();
 
         //find trips count
-        int tripsCount = totalBudget.divide(budgetPerCountry, RoundingMode.DOWN).intValue();
+        int budgetPerOneTravel = budgetPerCountry.intValue() * countryNeighbors.size();
+        int tripsCount = totalBudget.intValue() / budgetPerOneTravel;
 
         //calculate budget per country in respective currency
         Map<String, BigDecimal> budgetsInRespectiveCurrencies = new HashMap<>();
-        BigDecimal leftoverBudget = totalBudget;
+        BigDecimal neededBudget = budgetPerCountry.multiply(BigDecimal.valueOf(tripsCount)).multiply(BigDecimal.valueOf(countryNeighbors.size()));
+        BigDecimal leftoverBudget = totalBudget.subtract(neededBudget);
 
         for (Country country : countryNeighbors) {
             BigDecimal budgetInLocalCurrency = calculateBudgetInCountryCurrency(budgetPerCountry, country, baseCurrency);
             budgetsInRespectiveCurrencies.put(country.getName(), budgetInLocalCurrency);
-            leftoverBudget = leftoverBudget.subtract(budgetInLocalCurrency);
         }
+
+
 
         // Create and return the response
         TravelResponseDTO travelResponseDTO = new TravelResponseDTO();
-        travelResponseDTO.setTripsCount(tripsCount);
-        travelResponseDTO.setBudgetInRespectiveCurrency(budgetsInRespectiveCurrencies);
-        travelResponseDTO.setLeftoverBudget(leftoverBudget);
+        travelResponseDTO
+                .setBaseCurrency(baseCurrency)
+                .setTripsCount(tripsCount)
+                .setBudgetInRespectiveCurrency(budgetsInRespectiveCurrencies)
+                .setLeftoverBudget(leftoverBudget)
+                .setStartingCountryName(startCountry.getName())
+                .setBudgetPerCountry(budgetPerCountry)
+                .setTotalBudget(totalBudget)
+                .setNeededBudget(neededBudget);
 
 
         return travelResponseDTO;
     }
 
 
-
+    // calculate the budget in local currency
     private BigDecimal calculateBudgetInCountryCurrency(BigDecimal budgetPerCountry, Country country, String inputCurrency) throws InvalidAttributeValueException {
         BigDecimal exchangeRate = country.getCurrencyExchangeRate().getExchangeRate();
 
@@ -71,7 +80,7 @@ public class TravelPlanServiceImpl implements TravelPlanService {
             throw new InvalidAttributeValueException("Exchange rate not found for " + country.getName());
         }
 
-        BigDecimal budgetInCountryCurrency = budgetPerCountry.divide(exchangeRate, 2, RoundingMode.HALF_UP);
+        BigDecimal budgetInCountryCurrency = budgetPerCountry.multiply(exchangeRate);
 
 
         return budgetInCountryCurrency;

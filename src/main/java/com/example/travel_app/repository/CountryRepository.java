@@ -10,5 +10,6 @@ import java.util.Set;
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Long> {
 
+    //Find a specific country by its name
     Optional<Country> findCountryByName(String name);
 }
