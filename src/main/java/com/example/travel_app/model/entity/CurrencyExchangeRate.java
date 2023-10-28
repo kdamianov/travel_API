@@ -21,8 +21,6 @@ public class CurrencyExchangeRate {
     @Column(name = "exchange_rate")
     private BigDecimal exchangeRate;
 
-    @OneToOne
-    private Country country;
 
     public CurrencyExchangeRate() {
 
@@ -64,12 +62,4 @@ public class CurrencyExchangeRate {
         return this;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public CurrencyExchangeRate setCountry(Country country) {
-        this.country = country;
-        return this;
-    }
 }
