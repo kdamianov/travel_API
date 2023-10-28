@@ -13,7 +13,7 @@ spring:
 #populate DB --> mode: always
   sql:
     init:
-      mode: always
+      mode: never
 
 
 logging:
