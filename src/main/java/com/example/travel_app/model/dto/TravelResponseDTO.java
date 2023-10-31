@@ -1,13 +1,17 @@
 package com.example.travel_app.model.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.util.Map;
 
 public class TravelResponseDTO {
 
+
     private String startingCountryName;
-    String baseCurrency;
+    private String baseCurrency;
     private BigDecimal totalBudget;
+
     private BigDecimal budgetPerCountry;
     private Map<String, BigDecimal> budgetInRespectiveCurrency;
     private int tripsCount;

@@ -1,6 +1,6 @@
 package com.example.travel_app.controller;
 
-import com.example.travel_app.model.dto.CountryDTO;
+import com.example.travel_app.model.dto.CountryResponseDTO;
 import com.example.travel_app.model.dto.TravelResponseDTO;
 import com.example.travel_app.service.CountryService;
 import com.example.travel_app.service.TravelPlanService;
@@ -27,7 +27,7 @@ public class TravelController {
 
     //return all the neighbors of the country
     @GetMapping("/countries")
-    public ResponseEntity<List<CountryDTO>> getAllCountries(){
+    public ResponseEntity<List<CountryResponseDTO>> getAllCountries(){
 
         return ResponseEntity.ok(countryService.findAllCountries());
     }
